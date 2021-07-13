@@ -52,7 +52,7 @@ fun main() = Window(title = "Redis GUI", size = IntSize(1600, 900)) {
                     .background(color = Color(180, 180, 180))
                     .padding(4.dp)
             ) {
-                ButtonsSide(syncCommands, mainType, usedServer.value[0])
+                ButtonsSide(syncCommands, mainType, usedServer)
 
                 DisplayPanel(
                     modifier = Modifier.fillMaxSize(),
@@ -130,7 +130,7 @@ fun DisplayPanel(
 }
 
 @Composable
-fun ButtonsSide(syncCommands: MutableState<RedisCommands<String, String>>, mainType: MutableState<Array<String>>, server: String) {
+fun ButtonsSide(syncCommands: MutableState<RedisCommands<String, String>>, mainType: MutableState<Array<String>>, server: MutableState<Array<String>>) {
     val verticalState = rememberScrollState(0)
     Box {
         val keys = syncCommands.value.keys("*")
@@ -145,7 +145,7 @@ fun ButtonsSide(syncCommands: MutableState<RedisCommands<String, String>>, mainT
                 .verticalScroll(verticalState),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = server, style=TextStyle(fontWeight = FontWeight.Bold))
+            Text(text = server.value[0], style=TextStyle(fontWeight = FontWeight.Bold))
             keys.forEach {
                 val typeOfKey = remember { mutableStateOf("") }
                 Button(

@@ -50,6 +50,7 @@ fun DropDownMenu(
                             commands.value = RedisClient.create(current.value[1]).connect().sync()
                             File("session.txt").writeText(current.value[0] + "," + current.value[1])
                             mainType.value = arrayOf("", "")
+                            onDismissRequest()
                         }
                     ) {
                         Text(
